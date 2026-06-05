@@ -3,12 +3,8 @@ import time
 import telebot
 import yt_dlp
 
-# جلب التوكن بشكل آمن وسري من إعدادات السيرفر السحابي
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-
-if not BOT_TOKEN:
-    print("❌ خطأ: لم يتم العثور على التوكن! تأكد من إضافته في إعدادات السيرفر السحابي (Render).")
-    exit(1)
+# وضع التوكن الخاص بك مباشرة لضمان العمل الفوري والسريع
+BOT_TOKEN = "8011465083:AAF_BiwH_s-mtiWyIYJZWk9_habfjHYpHmQ"
 
 bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
 
@@ -85,5 +81,5 @@ def handle_message(message):
         bot.reply_to(message, "⚠️ يا غالي هذا الرابط غير مدعوم!\nالبوت مخصص لتحميل مقاطع (تيك توك وإنستغرام) فقط. 🖤\n\nلأي استفسار تواصل مع المطور: @Maghol084")
 
 # تشغيل البوت
-print("⚡ البوت السحابي مستعد للعمل على  السيرفر...")
+print("⚡ البوت السحابي مستعد للعمل على السيرفر...")
 bot.infinity_polling()
