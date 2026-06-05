@@ -5,7 +5,7 @@ import yt_dlp
 from threading import Thread
 from flask import Flask
 
-# 1. تشغيل السيرفر الوهمي لخداع ريندر وإبقائه مستيقظاً طوال الوقت
+# 1. تشغيل السيرفر الوهمي لإبقاء البوت مستيقظاً 24 ساعة
 app = Flask('')
 
 @app.route('/')
@@ -20,13 +20,13 @@ def keep_alive():
     t.start()
 
 # --------------------------------------------------
-# 2. التوكن الجديد الخاص بك جاهز ومدمج هنا تلقائياً
+# 2. التوكن الخاص بك مدمج هنا تلقائياً
 BOT_TOKEN = "8011465083:AAF_BiwH_s-mtiWyIYJZWk9_habfjHYpHmQ"
 # --------------------------------------------------
 
 bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
 
-# دالة تحميل ذكية ومخصصة للسيرفر (تدعم السرعة والتوافق التام)
+# دالة تحميل مقاطع الفيديو من التيك توك والإنستغرام
 def download_video(url, chat_id):
     file_name = f"video_{chat_id}_{int(time.time())}"
     
@@ -45,7 +45,7 @@ def download_video(url, chat_id):
         filename = ydl.prepare_filename(info)
         return filename
 
-# استقبال أمر البدء /start (كلام المطور الترحيبي الأصلي)
+# استقبال أمر البدء /start (رسالة المطور الأصلية كاملة)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     user_name = message.from_user.first_name
@@ -61,7 +61,7 @@ def send_welcome(message):
     )
     bot.reply_to(message, welcome_text)
 
-# معالجة الروابط المرسلة
+# معالجة الروابط وتحميلها
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     url = message.text
@@ -85,15 +85,14 @@ def handle_message(message):
             if "unsupported url" in error_msg.lower() or "photo" in url.lower():
                 bot.edit_message_text("⚠️ عذراً يا غالي، البوت مخصص لتحميل مقاطع الفيديو فقط، ولا يدعم الصور أو الألبومات المجمعة حالياً.", chat_id, msg.message_id)
             else:
-                bot.edit_message_text(f"❌ عذراً يا غالي، حدث خطأ أثناء التحميل.\nتأكد أن الحساب عام وليس خاصاً.\n\nإذا استمرت المشكلة، تواصل مع مطوري الغالي هنا: @Maghol084", chat_id, msg.message_id)
+                bot.edit_message_text(f"❌ عذراً يا غالي، حدث خطأ أثناء التحميل.\nتأكد أن الحساب عام وليس خاصاً.\n\nإذا استمرت المشكلة, تواصل مع مطوري الغالي هنا: @Maghol084", chat_id, msg.message_id)
             
             if 'video_file' in locals() and os.path.exists(video_file):
                 os.remove(video_file)
     else:
         bot.reply_to(message, "⚠️ يا غالي هذا الرابط غير مدعوم!\nالبوت مخصص لتحميل مقاطع (تيك توك وإنستغرام) فقط. 🖤\n\nلأي استفسار تواصل مع المطور: @Maghol084")
 
-# تشغيل السيرفر والبوت معاً طوال الوقت
 if __name__ == "__main__":
-    keep_alive()  # تشغيل السيرفر الوهمي لمنع الإغلاق
+    keep_alive()  # تشغيل الحارس لحماية البوت من النوم
     print("⚡ البوت السحابي مستعد للعمل على السيرفر...")
     bot.infinity_polling()
