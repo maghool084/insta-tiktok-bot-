@@ -19,7 +19,7 @@ def keep_alive():
 
 # --------------------------------------------------
 # ضع توكن بوتك هنا بين العلامتين
-BOT_TOKEN = "ضع_التوكن_هنا"
+BOT_TOKEN = "8011465083:AAF_BiwH_s-mtiWyIYJZWk9_habfjHYpHmQ"
 # --------------------------------------------------
 
 bot = telebot.TeleBot(BOT_TOKEN)
